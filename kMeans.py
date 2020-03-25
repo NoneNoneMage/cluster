@@ -9,10 +9,12 @@ def kMeans(dataSet,K,Z):
     while True:
         clusters = []
         clusteri = []
+        #初始化分类list
         for z in Z:
             zs = [z]
             clusters.append(zs)
             clusteri.append([])
+        #按照近邻法分配各点数据
         for i in range(len(dataSet)):
             minDist = util.distEclud(dataSet[i],Z[0])
             minInx = 0
@@ -26,6 +28,7 @@ def kMeans(dataSet,K,Z):
 
         isEnd = True
         Z = []
+        #计算新的聚类中心，如果聚类中心有更新，则迭代继续
         for cluster in clusters:
             vecR = cluster[1]
             for i in range(2,len(cluster)):
@@ -45,14 +48,18 @@ if __name__ == "__main__":
     #dataSet = [[0,0],[1,0],[0,1],[1,1],[2,1],[1,2],[2,2],[3,2],[6,6],[7,6],[8,6],[6,7],[7,7],[8,7],[9,7],[7,8],[8,8],[9,8],[8,9],[9,9]]
     dataSet = util.loadDataSet("EEG_feature.txt")
     labels = util.loadDataSet("valence_arousal_label.txt")
-    Z = [dataSet[0],dataSet[1],dataSet[2],dataSet[10]] 
+    data = util.loadDataSet("EEG_pca_feature.txt")
+    Z = [dataSet[0],dataSet[1],dataSet[2],dataSet[7]] 
     K = 4
     
+
     clusteri,clusters = kMeans(dataSet,K,Z)
-    for i in range(len(clusteri)):
-        print("分类:{:d}".format(i))
-        for inx in clusteri[i]:
-            print("编号:{:d},标签:{}".format(inx,labels[inx]))
+
+    util.plotFeature(data,clusteri)
+    # for i in range(len(clusteri)):
+    #     print("分类:{:d}".format(i))
+    #     for inx in clusteri[i]:
+    #         print("编号:{:d},标签:{}".format(inx,labels[inx]))
 
 
         

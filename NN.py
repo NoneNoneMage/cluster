@@ -104,27 +104,27 @@ if __name__ == "__main__":
     dataSet = util.loadDataSet("EEG_feature.txt")
     labels = util.loadDataSet("valence_arousal_label.txt")
     Z1 = 882  #First cluster center
-    beginT = 0 #Dist threshold begin val
+    beginT = 1 #Dist threshold begin val
     endT = 1000 #Dist threshold end val
     accuracy = 4 #Accurate to the number of decimal places
-    k = 4 #Target number of clusters
-    min,max=genMinMaxT(dataSet,beginT,endT,accuracy,k,Z1)
-    print(min,max)
+    k = 5 #Target number of clusters
+    # min,max=genMinMaxT(dataSet,beginT,endT,k,accuracy,Z1)
+    # print(min,max)
+
+
+    T = 1
+    zs,zsi = genClusters(dataSet,T,Z1)
+    print(zsi)
 
 
     # T = (min+max)/2
-    # zs,zsi = genClusters(dataSet,T,Z1)
-    # print(zsi)
+    # clusteri,clusterz = NN(dataSet,T,Z1)
 
-
-    T = (min+max)/2
-    clusteri,clusterz = NN(dataSet,T,Z1)
-
-    for i in range(len(clusteri)):
-        print("分类:{:d}".format(i))
-        c1=[1.0]
-        for inx in clusteri[i]:
-            print("编号:{:d},标签:{}".format(inx,labels[inx]))
+    # for i in range(len(clusteri)):
+    #     print("分类:{:d}".format(i))
+    #     c1=[1.0]
+    #     for inx in clusteri[i]:
+    #         print("编号:{:d},标签:{}".format(inx,labels[inx]))
 
 
     # for a in util.floatrange(0.01,1,10):

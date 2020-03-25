@@ -2,6 +2,18 @@
 __author__ = 'Mage'
 
 from numpy import *
+import matplotlib.pyplot as plt
+
+def plotFeature(pcadata, clusteri):
+    data=array(pcadata)
+    fig = plt.figure()
+    scatterColors = ['blue', 'green', 'yellow', 'brown','red','black']
+    ax = fig.add_subplot(111)
+    for i in range(len(clusteri)):
+            print("分类:{:d}".format(i))
+            for inx in clusteri[i]:
+                ax.scatter(data[:,0][inx], data[:,1][inx], c=scatterColors[i], s=30)
+    plt.show()
 
 def loadDataSet(fileName, splitChar='\t'):
     """ Load vectors from file
@@ -83,7 +95,18 @@ def classify(dataSet,zs,zsi):
 
 
 if __name__ == "__main__":
-    #dataSet = loadDataSet("EEG_feature.txt")
-    vec = [1,4,8,9]
-    print([a/2 for a in vec])
-    print(vec)
+    data = loadDataSet("EEG_pca_feature.txt")
+    labels = loadDataSet("valence_arousal_label.txt")
+    clusteri = [[],[],[],[]]
+    for lb in range(len(labels)):
+        if labels[lb] == [1,1]:
+            clusteri[0].append(lb)
+        if labels[lb] == [1,2]:
+            clusteri[1].append(lb)
+        if labels[lb] == [2,1]:
+            clusteri[2].append(lb)
+        if labels[lb] == [2,2]:
+            clusteri[3].append(lb)
+    plotFeature(data,clusteri)
+
+    
